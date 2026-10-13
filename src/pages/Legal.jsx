@@ -1,0 +1,9 @@
+import PageHero from '../components/PageHero'
+
+export default function Legal({ type='privacy' }) {
+  const privacy = type === 'privacy'
+  return <>
+    <PageHero eyebrow="DIU Press" subtitle="Policies & Guidelines" title={privacy ? 'Privacy Policy' : 'Terms of Use'} body={privacy ? 'A launch-ready placeholder for the formal privacy notice to be approved by DIU Press and Daffodil International University.' : 'A launch-ready placeholder for the website terms to be reviewed and approved before production release.'} />
+    <section className="section-space bg-white"><div className="container-shell"><article className="mx-auto max-w-3xl text-slate-600"><p className="font-serif text-2xl leading-9 text-diu-navy">This page is intentionally included so the website contains no dead legal links. Replace this draft with the institutionally approved policy before launch.</p><div className="mt-9 space-y-7 text-sm leading-8">{privacy ? <><p>DIU Press may collect information submitted through manuscript and contact forms for editorial evaluation, communication and publication administration. Access should be restricted to authorized personnel and retained according to institutional policy.</p><p>Uploaded manuscripts may contain unpublished work and should be handled as confidential editorial material. Production deployment should use configured protected cloud storage and strong administrator credentials.</p></> : <><p>Website content is provided for information about DIU Press publications, news and submission opportunities. Publication metadata and institutional information should be verified by DIU Press before launch.</p><p>Users submitting manuscripts confirm that they have the right to submit the material and that the information supplied is accurate to the best of their knowledge.</p></>}</div></article></div></section>
+  </>
+}

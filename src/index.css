@@ -1,0 +1,286 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: #101828;
+  background: #f8f9fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --navy: #071A3D;
+  --blue: #174EA6;
+  --green: #43B649;
+  --red: #EF3035;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; background: #f8f9fb; color: #101828; }
+a { color: inherit; text-decoration: none; }
+button, input, textarea, select { font: inherit; }
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+textarea,
+select {
+  border-radius: 0.75rem;
+}
+
+/* Hide browser default password reveal icons (Edge / IE) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+/* ==========================================================================
+   PREMIUM BUTTON & STEEL SHEEN HOVER SYSTEM
+   - Silky smooth GPU-accelerated micro-lift on hover (translateY: -2px)
+   - Background metallic steel reflection sweep (hardware-accelerated skewX)
+   - Stationary text and icons (no child sliding or jittering)
+   - Refined press-down active state
+   ========================================================================== */
+button:not(.btn-static):not([data-lock-btn]):not(.absolute):not([class*="absolute"]),
+.btn-steel,
+a[class*="rounded-full"][class*="px-"][class*="py-"]:not(.absolute):not([class*="absolute"]) {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  isolation: isolate;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Ensure absolute buttons strictly preserve absolute positioning */
+button.absolute,
+button[class*="absolute"] {
+  position: absolute !important;
+}
+
+/* Ensure text and icons remain stationary and sit above background steel sheen */
+button:not(.absolute):not([class*="absolute"]) > *,
+.btn-steel > *,
+a[class*="rounded-full"][class*="px-"][class*="py-"] > * {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Prevent inner text or icons from moving/sliding on button hover */
+button:hover > *,
+.btn-steel:hover > *,
+a[class*="rounded-full"][class*="px-"][class*="py-"]:hover > * {
+  transform: none !important;
+}
+
+/* Background metallic steel sheen reflection sweep */
+button:not(.no-steel):not(.btn-static):not([data-lock-btn]):not(.absolute):not([class*="absolute"])::before,
+.btn-steel::before,
+a[class*="rounded-full"][class*="px-"][class*="py-"]:not(.no-steel):not(.absolute):not([class*="absolute"])::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 25%,
+    rgba(255, 255, 255, 0.16) 42%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.16) 58%,
+    rgba(255, 255, 255, 0) 75%,
+    transparent 100%
+  );
+  transform: translateX(-145%) skewX(-22deg);
+  pointer-events: none;
+  z-index: 0;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Polished cool silver steel sheen for white / light buttons */
+button.bg-white::before,
+button[class*="bg-white"]::before,
+button.bg-slate-50::before,
+button[class*="bg-slate-50"]::before,
+button.bg-slate-100::before,
+button[class*="bg-slate-100"]::before,
+a.bg-white::before,
+a[class*="bg-white"]::before,
+a.bg-slate-50::before,
+a[class*="bg-slate-50"]::before {
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(226, 232, 240, 0) 25%,
+    rgba(203, 213, 225, 0.38) 42%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(203, 213, 225, 0.38) 58%,
+    rgba(226, 232, 240, 0) 75%,
+    transparent 100%
+  );
+}
+
+/* Sweep steel reflection across background on hover */
+button:not(:disabled):not(.no-steel):not(.btn-static):not([data-lock-btn]):not(.absolute):not([class*="absolute"]):hover::before,
+.btn-steel:hover::before,
+a[class*="rounded-full"][class*="px-"][class*="py-"]:not(.no-steel):not(.absolute):not([class*="absolute"]):hover::before {
+  transform: translateX(145%) skewX(-22deg);
+}
+
+/* Hover: silky smooth micro-lift */
+button:not(:disabled):not(.btn-static):not([data-lock-btn]):not(.absolute):not([class*="absolute"]):hover,
+.btn-steel:hover,
+a[class*="rounded-full"][class*="px-"][class*="py-"]:not(.absolute):not([class*="absolute"]):hover {
+  transform: translateY(-2px);
+}
+
+/* Active press state: grounded and tactile */
+button:not(:disabled):not(.btn-static):not([data-lock-btn]):not(.absolute):not([class*="absolute"]):active,
+.btn-steel:active,
+a[class*="rounded-full"][class*="px-"][class*="py-"]:not(.absolute):not([class*="absolute"]):active {
+  transform: translateY(0);
+  transition-duration: 0.1s;
+}
+
+/* Static buttons (lock icons, inline form controls) - completely inert with no movement */
+.btn-static,
+[data-lock-btn] {
+  transform: none !important;
+  transition: none !important;
+  will-change: auto !important;
+  overflow: visible !important;
+  box-shadow: none !important;
+}
+.btn-static::before,
+.btn-static::after,
+[data-lock-btn]::before,
+[data-lock-btn]::after {
+  display: none !important;
+  content: none !important;
+}
+.btn-static:hover,
+.btn-static:active,
+.btn-static:focus,
+[data-lock-btn]:hover,
+[data-lock-btn]:active,
+[data-lock-btn]:focus {
+  transform: none !important;
+  box-shadow: none !important;
+}
+::selection { background: rgba(23,78,166,.18); color: #071A3D; }
+
+.container-shell { width: min(1240px, calc(100% - 40px)); margin-inline: auto; }
+.section-space { padding-block: clamp(76px, 9vw, 128px); }
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #174EA6; }
+.editorial-rule { height: 1px; background: linear-gradient(90deg, rgba(23,78,166,.9), rgba(23,78,166,0)); }
+.text-balance { text-wrap: balance; }
+
+.paper-grid {
+  background-image:
+    linear-gradient(rgba(7,26,61,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(7,26,61,.035) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+
+.focus-ring:focus-visible { outline: 3px solid rgba(67,182,73,.4); outline-offset: 3px; }
+
+.book-spine { box-shadow: inset 10px 0 18px rgba(0,0,0,.14), 0 28px 45px rgba(7,26,61,.22); }
+
+@media (max-width: 640px) {
+  .container-shell { width: min(100% - 28px, 1240px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   ELEGANT THIN SCROLLBAR SYSTEM
+   - Sleek 5px-6px width matching DIU Press website aesthetic
+   - Transparent track, softly rounded thumb
+   - Cross-browser support (Chrome, Edge, Firefox, Safari)
+   ========================================================================== */
+* {
+  --scrollbar-thumb: rgba(100, 116, 139, 0.28);
+  --scrollbar-track: transparent;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.28);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(23, 78, 166, 0.55);
+}
+
+/* Dark scroller for sidebar & dark surfaces */
+.scrollbar-thin-dark,
+aside,
+[class*="bg-diu-navy"] {
+  --scrollbar-thumb: rgba(255, 255, 255, 0.2);
+  --scrollbar-track: transparent;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.scrollbar-thin-dark::-webkit-scrollbar,
+aside::-webkit-scrollbar,
+[class*="bg-diu-navy"]::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.scrollbar-thin-dark::-webkit-scrollbar-track,
+aside::-webkit-scrollbar-track,
+[class*="bg-diu-navy"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin-dark::-webkit-scrollbar-thumb,
+aside::-webkit-scrollbar-thumb,
+[class*="bg-diu-navy"]::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+}
+
+.scrollbar-thin-dark::-webkit-scrollbar-thumb:hover,
+aside::-webkit-scrollbar-thumb:hover,
+[class*="bg-diu-navy"]::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.38);
+}
+
